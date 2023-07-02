@@ -1,6 +1,6 @@
 # Spring Boot WebSocket Example
 
-This project is a simple example of how to use Spring Boot WebSocket.
+This project is a simple example of how to use Spring Boot WebSocket. It is a simple chat application that allows users to send messages to each other.
 
 ## Technologies
 - Java 17
@@ -9,6 +9,9 @@ This project is a simple example of how to use Spring Boot WebSocket.
 
 ## Screenshots
 
+<img src="./assets/Example_1.PNG">
+<img src="./assets/Example_2.PNG">
+<img src="./assets/Example_3.PNG">
 
 ## Resources
 - [Spring Boot WebSocket](https://spring.io/guides/gs/messaging-stomp-websocket/)
