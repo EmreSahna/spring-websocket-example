@@ -9,9 +9,9 @@ This project is a simple example of how to use Spring Boot WebSocket. It is a si
 
 ## Screenshots
 
-<img src="./assets/Example_1.PNG">
-<img src="./assets/Example_2.PNG">
-<img src="./assets/Example_3.PNG">
+<img src="./assets/login_example.PNG">
+<img src="./assets/message_example_1.PNG">
+<img src="./assets/message_example_2.PNG">
 
 ## Resources
 - [Spring Boot WebSocket](https://spring.io/guides/gs/messaging-stomp-websocket/)
