@@ -6,26 +6,33 @@
     <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
 </head>
 <body>
-<label for="name">What is your name?</label>
-<input type="text" id="name" placeholder="Your name here...">
-<button id="connect" onclick="connect()">Connect</button>
+<div id="websocket-things">
+    <button id="connect" onclick="connect()">Connect To ChatApp</button>
+    <button id="disconnect" onclick="disconnect()">Disconnect From ChatApp</button>
+    <button id="logout" onclick="logout()">Logout</button>
+</div>
 
-<label for="name">What is your message?</label>
+<div id="user-things">
+    <a href="user/login.html">Login</a>
+    <a href="user/register.html">Register</a>
+</div>
+
+<div id="users-list">
+</div>
+
+<label for="message">What is your message?</label>
 <input type="text" id="message" placeholder="Your message here...">
 
-<label for="name">Who is your receiver?</label>
-<input type="text" id="receiver" placeholder="Your receiver here...">
-
-<button id="send" onclick="sendMessage()">Send</button>
-
+<button id="send" onclick="sendMessage()">Send everyone</button>
 <button id="send-private" onclick="sendPrivateMessage()">Send private</button>
+
+<h2>Send Message To:</h2>
+<select id="receivers">
+</select>
 
 <h2>Messages:</h2>
 <div id="messages">
 </div>
-
-<p id="point"></p>
-<div id="table-p" style="width: 100px; height: 100px; background-color: red;"></div>
 
 <script src="app.js"></script>
 </body>

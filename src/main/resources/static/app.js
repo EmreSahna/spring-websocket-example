@@ -2,13 +2,9 @@ let stompClient = null;
 
 function connect() {
     let socket = new SockJS('/ws');
-    var user = document.getElementById('name').value;
+    var user = localStorage.getItem('username');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
-        stompClient.subscribe('/topic/cursor', function (result) {
-            showCursorPoint(JSON.parse(result.body));
-        });
-
         stompClient.subscribe('/topic/public', function (result) {
             showMessage(JSON.parse(result.body));
         });
@@ -19,6 +15,12 @@ function connect() {
     });
 }
 
+function disconnect() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+    }
+}
+
 function sendMessage() {
     var name = document.getElementById('name').value;
     var message = document.getElementById('message').value;
@@ -26,15 +28,17 @@ function sendMessage() {
 }
 
 function sendPrivateMessage() {
-    var name = document.getElementById('name').value;
+    var name = localStorage.getItem('username');
     var message = document.getElementById('message').value;
-    var receiver = document.getElementById('receiver').value;
+    var receiver = document.getElementById('receivers').value;
 
     var messageObject = {
         'content': message,
         'sender': name,
         'receiver': receiver
     }
+
+    console.log(messageObject)
 
     showMessage(messageObject);
     stompClient.send("/app/chat.sendPrivateMessage", {}, JSON.stringify(messageObject));
@@ -47,18 +51,29 @@ function showMessage(message) {
     messages.appendChild(messageItem);
 }
 
-function sendCursor(e) {
-    let x = e.clientX;
-    let y = e.clientY;
-    stompClient.send("/app/cursor", {}, JSON.stringify({ 'x': x, 'y': y }));
+var username = localStorage.getItem('username');
+var websocketThingsDiv = document.getElementById('websocket-things');
+var userThingsDiv = document.getElementById('user-things');
+if(username) {
+    websocketThingsDiv.style.display = 'block';
+    userThingsDiv.style.display = 'none';
+} else {
+    websocketThingsDiv.style.display = 'none';
+    userThingsDiv.style.display = 'block';
 }
 
-function showCursorPoint(message) {
-    let response = document.getElementById('point');
-    response.innerHTML = "x: [" + message.x + "]" + " y: [" + message.y + "]";
-}
+fetch('http://localhost:8080/users')
+.then(response => response.json())
+.then(data => data.forEach(user => {
+    if(user.username != username) {
+        var userItem = document.createElement('option');
+        userItem.value = user.username;
+        userItem.innerHTML = user.username;
+        document.getElementById('receivers').appendChild(userItem);
+    }
+})).catch(error => console.error(error));
 
-var elementP = document.getElementById('table-p')
-elementP.addEventListener('mousemove', function (event){
-    sendCursor(event);
-});
+function logout() {
+    localStorage.removeItem('username');
+    window.location.reload();
+}
